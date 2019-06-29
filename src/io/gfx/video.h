@@ -90,7 +90,10 @@
 	#define DEFAULT_SCREEN_WIDTH SW
 	#define DEFAULT_SCREEN_HEIGHT SH
 
+#ifndef SDL2
 	#define FULLSCREEN_FLAGS (SDL_FULLSCREEN | SDL_DOUBLEBUF | SDL_HWSURFACE | SDL_HWPALETTE)
+#endif //SDL2
+
 #endif
 
 // Time interval
@@ -104,6 +107,13 @@ class Video {
 
 	private:
 		SDL_Surface* screen; ///< Output surface
+
+#ifdef SDL2
+		SDL_Window* window;
+		SDL_Renderer* renderer;
+		SDL_Texture* texture;
+		SDL_Surface* helper_surface;
+#endif  // SDL2
 
 		// Palettes
 		SDL_Color*   currentPalette; ///< Current palette
