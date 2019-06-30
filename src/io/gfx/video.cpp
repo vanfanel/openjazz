@@ -341,7 +341,6 @@ void Video::changePalette (SDL_Color *palette, unsigned char first, unsigned int
 
 	#ifdef SDL2
 	SDL_SetPaletteColors(screen->format->palette, palette, first, amount);
-
 	#else
 	SDL_SetPalette(screen, SDL_PHYSPAL, palette, first, amount);
 	#endif
@@ -359,7 +358,7 @@ void Video::changePalette (SDL_Color *palette, unsigned char first, unsigned int
 void Video::restoreSurfacePalette (SDL_Surface* surface) {
 
 	#ifdef SDL2
-	SDL_SetPaletteColors(screen->format->palette, logicalPalette, 0, 256);
+	SDL_SetPaletteColors(surface->format->palette, logicalPalette, 0, 256);
 	#else
 	SDL_SetPalette(surface, SDL_LOGPAL, logicalPalette, 0, 256);
 	#endif
@@ -470,18 +469,8 @@ bool Video::isFullscreen () {
 void Video::expose () {
 
 	#ifdef SDL2
-	//SDL_SetPaletteColors(screen->format->palette, logicalPalette, 0, 256);
+	SDL_SetPaletteColors(screen->format->palette, logicalPalette, 0, 256);
 	SDL_SetPaletteColors(screen->format->palette, currentPalette, 0, 256);
-
-	/*SDL_Palette *sdlpalette = SDL_AllocPalette(256);
-
-	SDL_SetPaletteColors(sdlpalette, logicalPalette, 0, 256);
-	SDL_SetSurfacePalette(screen, sdlpalette);
-	
-	SDL_SetPaletteColors(sdlpalette, currentPalette, 0, 256);
-	SDL_SetSurfacePalette(screen, sdlpalette);*/
-	
-
 	#else
 	SDL_SetPalette(screen, SDL_LOGPAL, logicalPalette, 0, 256);
 	SDL_SetPalette(screen, SDL_PHYSPAL, currentPalette, 0, 256);
